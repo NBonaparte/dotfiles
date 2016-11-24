@@ -1,0 +1,38 @@
+#!/bin/bash
+# Script called by acpi docking detection. Used with arguments "dock" and "undock".
+INT="LVDS1"
+RIGHT="HDMI2"
+LEFT="HDMI3"
+export DISPLAY=:0
+
+refresh() {
+	# taken from polybar wiki: "Running the app"
+	killall -q polybar
+	while (pgrep -x polybar >/dev/null); do sleep 1; done
+	nitrogen --restore &
+	export MONITOR=$1
+	polybar example -r &
+}
+
+logger "ACPI event: $*"
+
+case "$1" in
+dock*)
+	xrandr -d :0.0 --output $INT --off --output $LEFT --auto --primary
+	bspc monitor $LEFT -n $LEFT -d 1 2 3 4 5
+	xrandr -d :0.0 --output $RIGHT --auto --right-of $LEFT
+	bspc monitor $RIGHT -n $RIGHT -d 6 7 8 9 0
+	refresh $RIGHT
+	;;
+undock*)
+	xrandr -d :0.0 --output $LEFT --off --output $RIGHT --off --output $INT --auto
+	bspc monitor $INT -n $INT -d 1 2 3 4 5
+	refresh $INT
+	;;
+*)
+	bspc monitor $INT -n $INT -d 1 2 3 4 5
+	refresh $INT
+	;;
+esac
+
+

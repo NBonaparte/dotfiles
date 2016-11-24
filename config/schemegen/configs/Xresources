@@ -1,0 +1,20 @@
+#define bg		#1d1f21
+#define fg		#c5c8c6
+
+#define black		#282a2e
+#define red		#a54242
+#define green		#8c9440
+#define yellow		#de935f
+#define blue		#5f819d
+#define magenta		#85678f
+#define cyan		#5e8d87
+#define lightgray	#707880
+
+#define darkgray	#373b41
+#define lightred	#cc6666
+#define lightgreen	#b5bd68
+#define lightyellow	#f0c674
+#define lightblue	#81a2be
+#define lightmagenta	#b294bb
+#define lightcyan	#8abeb7
+#define white		#c5c8c6

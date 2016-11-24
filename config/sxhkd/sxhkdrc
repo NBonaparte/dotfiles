@@ -1,0 +1,131 @@
+#
+# bspwm hotkeys
+#
+
+super + alt + Escape
+	pkill -x panel; bspc quit
+
+super + q
+	bspc node -c
+
+super + b
+	bspc desktop -B
+
+shift + super + space
+	bspc node -t ~floating
+
+super + {grave,Tab}
+	bspc {node,desktop} -f last
+
+super + apostrophe
+	bspc node -s last
+
+super + {o,i}
+	bspc wm -h off; \
+	bspc node {older,newer -f; \
+	bspc wm -h on
+
+super + y
+	bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
+
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+super + {_,shift + }c
+	bspc node -f {next,prev}
+
+super + {comma,period}
+	bspc node -f @{first,second}
+
+super + bracket{left,right}
+	bspc desktop -f {prev,next}
+
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+super + ctrl + {_,shift + }space
+
+super + alt + {h,j,k,l}
+	bspc node {@west -r -10,@south -r +10,@north -r -10,@east -r +10}
+
+super + alt + shift + {h,j,k,l}
+	bspc node {@east -r -10, @north -r +10,@south -r -10,@west -r +10}
+
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+super + {_,shift + }{1-9,0}
+	bspc {desktop -f,node -d} '{1-9,0}'
+
+#
+# wm independent hotkeys
+#
+super + w
+	chromium
+
+super + f
+	pcmanfm
+
+super + m
+	termite -e ncmpcpp
+
+super + t
+	termite
+
+super + v
+	termite -e vim
+
+super + d
+	rofi -show run
+
+super + r
+	termite -e ranger
+
+super + z
+	zathura
+
+super + shift + f
+	flashplayer http://realmeye.com/agc
+
+super + shift + m
+	minecraft
+
+super + shift + y
+	yakyak
+
+XF86AudioRaiseVolume
+	bash /home/$USER/scripts/notify/volume.sh high
+
+XF86AudioLowerVolume
+	bash /home/$USER/scripts/notify/volume.sh low
+
+XF86AudioMute
+	bash /home/$USER/scripts/notify/volume.sh mute
+
+XF86AudioPlay
+	mpc play
+
+XF86AudioStop
+	mpc stop
+
+XF86MonBrightnessDown
+	sleep 0.1 && bash /home/$USER/scripts/notify/brightness.sh
+
+XF86MonBrightnessUp
+	sleep 0.1 && bash /home/$USER/scripts/notify/brightness.sh
+
+Print
+	scrot -e 'mv $f ~/Pictures/scrots/'
+
+F2
+	i3lock-fancy -p
+
+F7
+	bash /home/$USER/scripts/monitordialog.sh
+
+super + shift + s
+	systemctl suspend
+
+# make sxhkd reload its configuration files:
+super + Escape
+	pkill -USR1 -x sxhkd
