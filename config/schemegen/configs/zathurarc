@@ -1,0 +1,36 @@
+set font			"Source Code Pro for Powerline Regular 10"
+
+set default-bg			"#1d1f21"
+set default-fg			"#c5c8c6"
+
+set statusbar-bg		"#1d1f21"
+set statusbar-fg		"#c5c8c6"
+
+set inputbar-bg 		"#1d1f21"
+set inputbar-fg			"#c5c8c6"
+
+set notification-error-bg	"#a54242"
+set notification-error-fg	"#c5c8c6"
+
+set notification-warning-bg	"#a54242"
+set notification-warning-fg	"#c5c8c6"
+
+set highlight-color		"#373b41"
+set highlight-active-color	"#707880"
+
+set completion-highlight-bg	"#c5c8c6"
+set completion-highlight-fg	"#282a2e"
+
+set completion-bg		"#282a2e"
+set completion-fg		"#c5c8c6"
+
+set notification-bg		"#8c9440"
+set notification-fg		"#c5c8c6"
+
+set recolor-lightcolor		"#1d1f21"
+set recolor-darkcolor		"#c5c8c6"
+set recolor			"true"
+set recolor-keephue		"true"
+#set recolor-reverse-video	"true"
+
+set adjust-open			width
