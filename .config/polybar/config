@@ -1,0 +1,233 @@
+;================================================
+;						;
+;	  NBonaparte's polybar config		;
+;						;
+;================================================
+
+[colors]
+bg = 		${xrdb:*background:#1d1f21}
+fg = 		${xrdb:*foreground:#c5c8c6}
+black = 	${xrdb:*color0:#282a2e}
+darkgrey = 	${xrdb:*color8:#373b41}
+red = 		${xrdb:*color1:#a54242}
+lightred = 	${xrdb:*color9:#cc6666}
+green = 	${xrdb:*color2:#8c9440}
+lightgreen = 	${xrdb:*color10:#b5bd68}
+yellow = 	${xrdb:*color3:#de935f}
+lightyellow = 	${xrdb:*color11:#f0c674}
+blue = 		${xrdb:*color4:#5f819d}
+lightblue = 	${xrdb:*color12:#81a2be}
+magenta = 	${xrdb:*color5:#85678f}
+lightmagenta = 	${xrdb:*color13:#b294bb}
+cyan = 		${xrdb:*color6:#5e8d87}
+lightcyan = 	${xrdb:*color14:#8abeb7}
+lightgrey = 	${xrdb:*color7:#707880}
+white = 	${xrdb:*color15:#c5c8c6}
+icon = 		${colors.lightblue}
+
+[bar/example]
+; run 'export MONITOR="HDMI2"'
+monitor = ${env:MONITOR:LVDS1}
+screenchange-reload = true
+; deprecate dock if bspwm new release: https://github.com/baskerville/bspwm/issues/575
+override-redirect = true
+width = 100%
+; top_padding defined as 24
+height = 24
+; offset if want to make it floating
+offset-x = 0
+offset-y = 0
+
+background = ${colors.bg}
+foreground = ${colors.fg}
+overline-color = #666
+
+spacing = 1
+padding-right = 2
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = SourceCodePro:size=10;0
+font-1 = MaterialDesignIcons:size=12;0
+
+modules-left = bspwm powermenu
+modules-center = mpd
+modules-right = temperature pkgupdate wifi battery volume memory cpu date
+
+tray-position = right
+tray-background = ${colors.black}
+tray-padding = 1
+
+wm-restack = bspwm
+
+[global/wm]
+;margin-bottom = 10
+
+[module/bspwm]
+type = internal/bspwm
+format = <label-state>
+pin-workspaces = false
+
+label-focused = 
+label-focused-padding = 1
+label-dimmed-focused = 
+label-dimmed-focused-foreground = ${colors.lightgrey}
+
+label-occupied = 
+label-occupied-foreground = ${colors.darkgrey}
+label-occupied-padding = 1
+
+label-urgent = 
+label-urgent-background = ${colors.lightred}
+label-urgent-padding = 1
+
+label-empty = 
+label-empty-foreground = ${colors.darkgrey}
+label-empty-padding = 1
+
+[module/cpu]
+type = internal/cpu
+format-prefix = " "
+format-prefix-foreground = ${colors.icon}
+label = %percentage:4%
+
+[module/memory]
+type = internal/memory
+format-prefix = " "
+format-prefix-foreground = ${colors.icon}
+label = %percentage_used:4%
+
+[module/wifi]
+type = internal/network
+interface = wlp3s0
+accumulate-stats = true
+label-connected = %downspeed:8%
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.icon}
+label-disconnected = 
+label-disconnected-foreground = ${colors.icon}
+
+[module/date]
+type = internal/date
+date = %H:%M:%S
+format-prefix = " "
+format-prefix-foreground = ${colors.icon}
+date-alt = %Y-%m-%d %H:%M:%S
+
+[module/volume]
+type = internal/volume
+;headphone-mixer = Headphone
+;headphone-id = 3
+mapped = true
+format-volume = <ramp-volume> <label-volume>
+
+label-volume = %percentage:4%
+label-muted = MUTE
+format-muted-prefix = " "
+format-muted-prefix-foreground = ${colors.icon}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-foreground = ${colors.icon}
+
+[module/battery]
+type = internal/battery
+full-at = 97
+battery = BAT0
+adapter = AC
+
+format-charging = <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+label-full = %percentage:4%
+format-full-prefix = " "
+format-full-prefix-foreground = ${colors.icon}
+label-charging = %percentage:4%
+format-charging-prefix = " "
+format-charging-prefix-foreground = ${colors.icon}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
+ramp-capacity-foreground = ${colors.icon}
+
+[module/mpd]
+type = internal/mpd
+
+format-online = <label-song> <toggle-stop>
+format-online-background = ${colors.darkgrey}
+format-online-padding = 3
+label-song = %title%
+
+label-offline = mpd is off
+
+label-song-maxlen = 50
+label-song-ellipsis = true
+
+icon-prev = 
+icon-seekb = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+icon-seekf = 
+icon-random = 
+icon-repeat = 
+
+toggle-on-foreground = ${colors.icon}
+toggle-off-foreground = #66
+
+[module/powermenu]
+type = custom/menu
+
+label-open = 
+label-close = 
+label-separator = /
+
+menu-0-0 = 
+menu-0-0-foreground = ${colors.lightred}
+menu-0-0-exec = bspc quit -1
+menu-0-1 = 
+menu-0-1-foreground = ${colors.lightred}
+menu-0-1-exec = menu-open-1
+menu-0-2 = 
+menu-0-2-foreground = ${colors.lightred}
+menu-0-2-exec = menu-open-2
+
+menu-1-0 = 
+menu-1-0-foreground = ${colors.lightred}
+menu-1-0-exec = menu-open-0
+menu-1-1 = 
+menu-1-1-foreground = ${colors.lightred}
+menu-1-1-exec = reboot
+
+menu-2-0 = 
+menu-2-0-foreground = ${colors.lightred}
+menu-2-0-exec = sudo poweroff
+menu-2-1 = 
+menu-2-1-foreground = ${colors.lightred}
+menu-2-1-exec = menu-open-0
+
+[module/pkgupdate]
+type = custom/script
+exec = checkupdates | wc -l
+format-prefix = " "
+format-prefix-foreground = ${colors.icon}
+label = %output:2%
+click-left = termite -e 'yaourt -Syua' &
+interval = 120
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+label = %temperature:5%
+format-prefix = " "
+format-prefix-foreground = ${colors.icon}
+format-warn-prefix = " "
+format-warn-prefix-foreground = ${colors.lightred}
+label-warn = %temperature:5%
+warn-temperature = 75
+; vim:ft=dosini
