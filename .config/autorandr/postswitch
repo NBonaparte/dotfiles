@@ -1,0 +1,42 @@
+#!/bin/bash
+# postswitch script for autorandr
+INT="LVDS1"
+RIGHT="HDMI2"
+LEFT="HDMI3"
+export DISPLAY=:0
+
+refresh() {
+	# cleanup
+	bspc wm --adopt-orphans
+	#bspc config -m $1 top_padding 24
+	#killall -q polybar
+	#while (pgrep -x polybar > /dev/null); do sleep 1; done
+	nitrogen --restore &
+	#export MONITOR=$1
+	#polybar example -r &
+	if ! pgrep polybar > /dev/null; then
+		polybar example -r &
+	fi
+
+	if ! pgrep nm-applet > /dev/null; then
+		nm-applet &
+	fi
+
+}
+
+case "$AUTORANDR_CURRENT_PROFILE" in
+docked)
+	#xrandr -d :0.0 --output $INT --off --output $LEFT --auto --primary
+	bspc monitor $LEFT -n $LEFT -d 1 2 3 4 5
+	#xrandr -d :0.0 --output $RIGHT --auto --right-of $LEFT
+	bspc monitor $RIGHT -n $RIGHT -d 6 7 8 9 0
+	refresh $RIGHT
+	;;
+mobile)
+	#xrandr -d :0.0 --output $LEFT --off --output $RIGHT --off --output $INT --auto
+	bspc monitor $INT -n $INT -d 1 2 3 4 5
+	refresh $INT
+	;;
+esac
+
+
