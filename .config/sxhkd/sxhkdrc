@@ -8,8 +8,11 @@ super + alt + Escape
 super + q
 	bspc node -c
 
+#super + t
+#	bspc desktop -l next
+
 super + b
-	bspc desktop -B
+	bspc desktop -B #???
 
 shift + super + space
 	bspc node -t ~floating
@@ -18,7 +21,7 @@ super + {grave,Tab}
 	bspc {node,desktop} -f last
 
 super + apostrophe
-	bspc node -s last
+	bspc node -s last #???
 
 super + {o,i}
 	bspc wm -h off; \
@@ -27,6 +30,9 @@ super + {o,i}
 
 super + y
 	bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
+
+#super + m
+	#bspc window -s biggest
 
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
@@ -56,6 +62,19 @@ super + ctrl + {1-9}
 
 super + {_,shift + }{1-9,0}
 	bspc {desktop -f,node -d} '{1-9,0}'
+	#bspc {desktop -f,node -d} '^{1-9,10}'
+
+#~button1
+#	bspc pointer -g focus
+
+#super + button{1-3}
+#	bspc pointer -g {move,resize_side,resize_corner}
+
+#super + !button{1-3}
+#	bspc pointer -t %i %i
+
+#super + @button{1-3}
+#	bspc pointer -u
 
 #
 # wm independent hotkeys
@@ -74,10 +93,15 @@ super + t
 
 super + v
 	termite -e vim
-
 super + d
 	rofi -show run
+	#if (bspc query -M -m | grep "LVDS1"); then PAD=345; else PAD=486; fi; rofi -show run -color-window "#1d1f21, #1d1f21, #1d1f21" -color-normal "#1d1f21, #c5c8c6, #1d1f21, #1d1f21, #8abeb7" -color-active "#1d1f21, #8abeb7, #282a2e, #373b41, #8abeb7" -color-urgent "#1d1f21, #cc6666, #282a2e, #373b41, #cc6666" -terminal termite -lines 5 -eh 2 -m -4 -bw 0 -padding $PAD -width 100 -opacity 85
+	#if [[ $(bspc query -M -d) == "HDMI" ]]; then PAD=486; else PAD=345; fi; rofi -show run -color-window "#1d1f21, #1d1f21, #1d1f21" -color-normal "#1d1f21, #c5c8c6, #1d1f21, #1d1f21, #8abeb7" -color-active "#1d1f21, #8abeb7, #282a2e, #373b41, #8abeb7" -color-urgent "#1d1f21, #cc6666, #282a2e, #373b41, #cc6666" -terminal termite -lines 5 -eh 2 -m -4 -bw 0 -padding $PAD -width 100 -opacity 85
+	#rofi -show run -color-window "#1d1f21, #1d1f21, #1d1f21" -color-normal "#1d1f21, #c5c8c6, #1d1f21, #1d1f21, #8abeb7" -color-active "#1d1f21, #8abeb7, #282a2e, #373b41, #8abeb7" -color-urgent "#1d1f21, #cc6666, #282a2e, #373b41, #cc6666" -terminal termite -lines 5 -eh 2 -m 0 -bw 0 -padding 20
 
+	#rofi -show run -terminal termite -lines 5 -eh 2 -m 0 -bw 0 -padding 20 -bc "#1d1f21" -bg "#1d1f21" -fg "#c5c8c6" -hlbg "#1d1f21" -hlfg "#8abeb7"
+	#rofi -show run -terminal termite -lines 3 -eh 2 -width 100 -padding 328 -opacity "85" -m 0 -bw 0 -bc "#1d1f21" -bg "#1d1f21" -fg "#c5c8c6" -hlbg "#1d1f21" -hlfg "#8abeb7"
+	#dmenu_run -y 364 -x 20 -w 1326 -nb '#1D1F21' -nf '#C5C8C6' -sb '#5E8D87' -fn 'Source Code Pro for Powerline-10' -dim 0.5 -p "Run:"
 super + r
 	termite -e ranger
 
@@ -85,7 +109,7 @@ super + z
 	zathura
 
 super + shift + f
-	flashplayer http://realmeye.com/agc
+	flashplayer http://realmeye.com/agc #http://www.realmeye.com/appspot
 
 super + shift + m
 	minecraft
@@ -95,12 +119,15 @@ super + shift + y
 
 XF86AudioRaiseVolume
 	bash /home/$USER/scripts/notify/volume.sh high
+	#amixer -q sset Master,0 5%+ unmute
 
 XF86AudioLowerVolume
 	bash /home/$USER/scripts/notify/volume.sh low
+	#amixer -q sset Master,0 5%- unmute
 
 XF86AudioMute
 	bash /home/$USER/scripts/notify/volume.sh mute
+	#amixer -q sset Master,0 toggle
 
 XF86AudioPlay
 	mpc play
@@ -116,16 +143,17 @@ XF86MonBrightnessUp
 
 Print
 	scrot -e 'mv $f ~/Pictures/scrots/'
-
 F2
 	i3lock-fancy -p
+#F7
+#	bash /home/$USER/scripts/monitordialog.sh
+	#bash /home/$USER/scripts/smartmonitor.sh
 
-F7
-	bash /home/$USER/scripts/monitordialog.sh
+#F8
+	#bash /home/$USER/scripts/smartmonitor_large.sh
 
 super + shift + s
 	systemctl suspend
-
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd

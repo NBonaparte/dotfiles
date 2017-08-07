@@ -24,13 +24,14 @@ lightcyan = 	${xrdb:*color14:#8abeb7}
 lightgrey = 	${xrdb:*color7:#707880}
 white = 	${xrdb:*color15:#c5c8c6}
 icon = 		${colors.lightblue}
+[settings]
+screenchange-reload = true
 
 [bar/example]
-; run 'export MONITOR="HDMI2"'
-monitor = ${env:MONITOR:LVDS1}
-screenchange-reload = true
+monitor = HDMI2
+monitor-fallback = LVDS1
+;override-redirect = true
 ; deprecate dock if bspwm new release: https://github.com/baskerville/bspwm/issues/575
-override-redirect = true
 width = 100%
 ; top_padding defined as 24
 height = 24
@@ -39,35 +40,41 @@ offset-x = 0
 offset-y = 0
 
 background = ${colors.bg}
+;background = #00000000
 foreground = ${colors.fg}
 overline-color = #666
 
-spacing = 1
+;spacing = 1
 padding-right = 2
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = SourceCodePro:size=10;0
-font-1 = MaterialDesignIcons:size=12;0
+font-0 = "SourceCodePro:size=10;3"
+font-1 = "MaterialDesignIcons:size=12;3"
 
 modules-left = bspwm powermenu
 modules-center = mpd
+; conky order: pkgupdate, cpu, mem, download, temp, bat, vol, time
+;modules-right = github temperature pkgupdate wifi battery volume memory cpu date
 modules-right = temperature pkgupdate wifi battery volume memory cpu date
 
 tray-position = right
+;tray-maxsize = 24
 tray-background = ${colors.black}
 tray-padding = 1
 
 wm-restack = bspwm
 
 [global/wm]
-;margin-bottom = 10
+;margin-bottom = 24
 
 [module/bspwm]
 type = internal/bspwm
 format = <label-state>
 pin-workspaces = false
+enable-click = true
 
+;label-active = 
 label-focused = 
 label-focused-padding = 1
 label-dimmed-focused = 
@@ -89,23 +96,28 @@ label-empty-padding = 1
 type = internal/cpu
 format-prefix = " "
 format-prefix-foreground = ${colors.icon}
-label = %percentage:4%
+label = %percentage:3%%
+;
 
 [module/memory]
 type = internal/memory
 format-prefix = " "
 format-prefix-foreground = ${colors.icon}
-label = %percentage_used:4%
+label = %percentage_used:3%%
+;
 
 [module/wifi]
 type = internal/network
 interface = wlp3s0
+;interface = enp0s25
 accumulate-stats = true
 label-connected = %downspeed:8%
 format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.icon}
 label-disconnected = 
+;label-disconnected = 
 label-disconnected-foreground = ${colors.icon}
+; 
 
 [module/date]
 type = internal/date
@@ -113,6 +125,7 @@ date = %H:%M:%S
 format-prefix = " "
 format-prefix-foreground = ${colors.icon}
 date-alt = %Y-%m-%d %H:%M:%S
+; 
 
 [module/volume]
 type = internal/volume
@@ -120,8 +133,7 @@ type = internal/volume
 ;headphone-id = 3
 mapped = true
 format-volume = <ramp-volume> <label-volume>
-
-label-volume = %percentage:4%
+label-volume = %percentage:3%%
 label-muted = MUTE
 format-muted-prefix = " "
 format-muted-prefix-foreground = ${colors.icon}
@@ -139,10 +151,10 @@ adapter = AC
 
 format-charging = <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
-label-full = %percentage:4%
+label-full = %percentage:3%%
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.icon}
-label-charging = %percentage:4%
+label-charging = %percentage:3%%
 format-charging-prefix = " "
 format-charging-prefix-foreground = ${colors.icon}
 
@@ -179,6 +191,7 @@ icon-repeat = 
 
 toggle-on-foreground = ${colors.icon}
 toggle-off-foreground = #66
+;
 
 [module/powermenu]
 type = custom/menu
@@ -206,10 +219,11 @@ menu-1-1-exec = reboot
 
 menu-2-0 = 
 menu-2-0-foreground = ${colors.lightred}
-menu-2-0-exec = sudo poweroff
+menu-2-0-exec = poweroff
 menu-2-1 = 
 menu-2-1-foreground = ${colors.lightred}
 menu-2-1-exec = menu-open-0
+;            
 
 [module/pkgupdate]
 type = custom/script
@@ -219,6 +233,7 @@ format-prefix-foreground = ${colors.icon}
 label = %output:2%
 click-left = termite -e 'yaourt -Syua' &
 interval = 120
+;  
 
 [module/temperature]
 type = internal/temperature
@@ -230,4 +245,13 @@ format-warn-prefix = " "
 format-warn-prefix-foreground = ${colors.lightred}
 label-warn = %temperature:5%
 warn-temperature = 75
+
+[module/github]
+type = internal/github
+token = ${file:/home/$USER/.config/polybar/github.token}
+empty-notifications = true
+format-prefix = " "
+format-prefix-foreground = ${colors.icon}
+label = %notifications:2%
+interval = 120
 ; vim:ft=dosini
